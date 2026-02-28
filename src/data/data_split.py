@@ -2,8 +2,8 @@ import pandas as pd
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 
-RAW_FILE = "../../data/raw/clean_data.csv"
-PROCESSED_DIR = Path("../../data/processed")
+RAW_FILE = "../../data/raw_data/clean_data.csv"
+PROCESSED_DIR = Path("../../data/split_data")
 
 df = pd.read_csv(RAW_FILE)
 
