@@ -4,3 +4,5 @@
 /prediction.csv
 /raw_data
 /processed_data
+/preprocessed
+/split_data
