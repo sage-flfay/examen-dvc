@@ -1,0 +1,92 @@
+schema: '2.0'
+stages:
+  split:
+    cmd: python src/data/data_split.py
+    deps:
+    - path: data/raw_data
+      hash: md5
+      md5: d6b707ff6bf8ba93fb0b51b0ee31905d.dir
+      size: 333774
+      nfiles: 2
+    - path: src/data/data_split.py
+      hash: md5
+      md5: a45d606493190d63984282a79201c59c
+      size: 773
+    outs:
+    - path: data/split_data
+      hash: md5
+      md5: 33a70e2e53c6453022d06f1f5b845d2a.dir
+      size: 334487
+      nfiles: 4
+  normalize:
+    cmd: python src/data/normalize.py
+    deps:
+    - path: data/split_data
+      hash: md5
+      md5: 33a70e2e53c6453022d06f1f5b845d2a.dir
+      size: 334487
+      nfiles: 4
+    - path: src/data/normalize.py
+      hash: md5
+      md5: 68419af118024f37171391d3d63c2583
+      size: 935
+    outs:
+    - path: data/processed_data
+      hash: md5
+      md5: 3a2ecc8d7cf041edd21cd1eefa93c88a.dir
+      size: 286342
+      nfiles: 2
+  grid_search:
+    cmd: python src/models/grid_search.py
+    deps:
+    - path: data/processed_data
+      hash: md5
+      md5: 3a2ecc8d7cf041edd21cd1eefa93c88a.dir
+      size: 286342
+      nfiles: 2
+    - path: src/models/grid_search.py
+      hash: md5
+      md5: e2e2ee3a34990c8bfd8e9388e11e3fd9
+      size: 1104
+    outs:
+    - path: params
+      hash: md5
+      md5: 48b9cabb9c02382d607ff9a7be497f68.dir
+      size: 108
+      nfiles: 1
+  training:
+    cmd: python src/models/training.py
+    deps:
+    - path: params
+      hash: md5
+      md5: 48b9cabb9c02382d607ff9a7be497f68.dir
+      size: 108
+      nfiles: 1
+    - path: src/models/training.py
+      hash: md5
+      md5: 00b74df3cc00914b273af432f22bd943
+      size: 781
+    outs:
+    - path: models
+      hash: md5
+      md5: 603e39f9e8b04420c3dbb99a62a16984.dir
+      size: 9047977
+      nfiles: 1
+  evaluate:
+    cmd: python src/models/evaluate.py
+    deps:
+    - path: models
+      hash: md5
+      md5: 603e39f9e8b04420c3dbb99a62a16984.dir
+      size: 9047977
+      nfiles: 1
+    - path: src/models/evaluate.py
+      hash: md5
+      md5: e98471630b686e811978f95f650c633c
+      size: 1191
+    outs:
+    - path: metrics
+      hash: md5
+      md5: 1d3c175841c42eba18b853705faf29ed.dir
+      size: 77180
+      nfiles: 2

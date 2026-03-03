@@ -14,21 +14,21 @@ stages:
     outs:
     - data/processed_data
   grid_search:
-    cmd: python src/data/grid_search.py
+    cmd: python src/models/grid_search.py
     deps:
     - data/processed_data
     - src/models/grid_search.py
     outs:
     - params
   training:
-    cmd: python src/data/training.py
+    cmd: python src/models/training.py
     deps:
     - params
     - src/models/training.py
     outs:
     - models
   evaluate:
-    cmd: python src/data/evaluate.py
+    cmd: python src/models/evaluate.py
     deps:
     - models
     - src/models/evaluate.py

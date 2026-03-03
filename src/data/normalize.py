@@ -2,8 +2,10 @@ import pandas as pd
 from pathlib import Path
 from sklearn.preprocessing import StandardScaler
 
-SPLIT_DIR = Path("../../data/split_data")
-PROCESSED_DIR = Path("../../data/processed_data")
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+SPLIT_DIR = BASE_DIR / "data" / "split_data"
+PROCESSED_DIR = BASE_DIR / "data" / "processed_data"
+PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
 X_train = pd.read_csv(SPLIT_DIR / "X_train.csv")
 X_test = pd.read_csv(SPLIT_DIR / "X_test.csv")

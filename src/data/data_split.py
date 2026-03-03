@@ -2,8 +2,10 @@ import pandas as pd
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 
-RAW_FILE = "../../data/raw_data/clean_data.csv"
-PROCESSED_DIR = Path("../../data/split_data")
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+RAW_FILE = BASE_DIR / "data" / "raw_data" / "clean_data.csv"
+PROCESSED_DIR = BASE_DIR / "data" / "split_data"
+PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
 df = pd.read_csv(RAW_FILE)
 

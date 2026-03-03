@@ -4,10 +4,13 @@ from pathlib import Path
 from sklearn.metrics import r2_score, root_mean_squared_error
 import json
 
-PROCESSED_DIR = Path("../../data/processed_data")
-SPLIT_DIR = Path("../../data/split_data")
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+PROCESSED_DIR = BASE_DIR / "data" / "processed_data"
+SPLIT_DIR = BASE_DIR / "data" / "split_data"
+METRICS_DIR = BASE_DIR / "metrics"
+METRICS_DIR.mkdir(parents=True, exist_ok=True)
 
-with open("../../models/model.pkl", "rb") as f:
+with open(BASE_DIR / "models" / "model.pkl", "rb") as f:
     best_model = pickle.load(f)
 
 X_test_scaled = pd.read_csv(PROCESSED_DIR / "X_test_scaled.csv")
@@ -27,7 +30,7 @@ predictions_df["residual"] = (
     predictions_df["predicted_silica_concentrate"]
 )
 
-predictions_df.to_csv("../../metrics/predictions.csv", index=False)
+predictions_df.to_csv(METRICS_DIR / "predictions.csv", index=False)
 
-with open("../../metrics/scores.json", "w") as f:
+with open(METRICS_DIR / "scores.json", "w") as f:
     json.dump({"rmse": rmse, "r2": r2}, f, indent=4)
