@@ -5,10 +5,12 @@ from pathlib import Path
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 
-PROCESSED_DIR = Path("../../data/processed")
+PROCESSED_DIR = Path("../../data/processed_data")
+SPLIT_DIR = Path("../../data/split_data")
+
 
 X_train_scaled = pd.read_csv(PROCESSED_DIR / "X_train_scaled.csv")
-y_train = pd.read_csv(PROCESSED_DIR / "y_train.csv")
+y_train = pd.read_csv(SPLIT_DIR / "y_train.csv")
 
 model = RandomForestRegressor(random_state=42)
 
@@ -31,8 +33,9 @@ grid_search = GridSearchCV(
 grid_search.fit(X_train_scaled, y_train)
 
 
-with open("metrics/best_params.json", "r") as f:
-    best_params = json.save(grid_search.best_params_, f, indent=4)
+
+with open("../../params/best_params.json", "w", encoding="utf-8") as f:
+    json.dump(grid_search.best_params_, f, indent=4)
 
 
 

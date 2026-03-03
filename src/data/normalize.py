@@ -1,12 +1,15 @@
-from datetime import datetime,UTC
 import pandas as pd
 from pathlib import Path
 from sklearn.preprocessing import StandardScaler
 
-PROCESSED_DIR = Path("../../data/processed")
+SPLIT_DIR = Path("../../data/split_data")
+PROCESSED_DIR = Path("../../data/processed_data")
 
-X_train = pd.read_csv(PROCESSED_DIR / "X_train.csv")
-X_test = pd.read_csv(PROCESSED_DIR / "X_test.csv")
+X_train = pd.read_csv(SPLIT_DIR / "X_train.csv")
+X_test = pd.read_csv(SPLIT_DIR / "X_test.csv")
+
+X_train = X_train.drop(columns=["date"])#useless
+X_test = X_test.drop(columns=["date"])#useless
 
 scaler = StandardScaler()
 

@@ -1,22 +1,22 @@
 import pickle
 import pandas as pd
 from pathlib import Path
-from sklearn.base import r2_score
-from sklearn.metrics import root_mean_squared_error
+from sklearn.metrics import r2_score, root_mean_squared_error
 import json
 
 PROCESSED_DIR = Path("../../data/processed_data")
+SPLIT_DIR = Path("../../data/split_data")
 
 with open("../../models/model.pkl", "rb") as f:
     best_model = pickle.load(f)
 
 X_test_scaled = pd.read_csv(PROCESSED_DIR / "X_test_scaled.csv")
-y_test = pd.read_csv(PROCESSED_DIR / "y_test.csv")
+y_test = pd.read_csv(SPLIT_DIR / "y_test.csv")
 
 
 y_pred = best_model.predict(X_test_scaled)
 
-rmse = root_mean_squared_error(y_test, y_pred, squared=False)
+rmse = root_mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
 predictions_df = X_test_scaled.copy()
